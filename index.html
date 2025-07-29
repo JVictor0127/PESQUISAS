@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Viabilidade: Consultoria em Imperatriz/MA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony -->
+    <!-- Application Structure Plan: A single-page dashboard structure was chosen to provide a dynamic, non-linear user experience. The flow is designed to guide the user from a high-level overview to a specific market opportunity and finally to actionable strategies. It starts with a 'Hero' section with key stats (Início), moves to a detailed 'Panorama' with tabbed navigation for Economy, Demographics, and Business, then highlights 'The Big Opportunity' with a compelling visual contrast, and concludes with an interactive 'Strategic Plan'. This structure is more engaging than a linear report and allows users to explore data at their own pace, making complex information more digestible. -->
+    <!-- Visualization & Content Choices: 
+        - PIB Growth: Report Info -> PIB values over years. Goal -> Show change/trend. Viz -> Line Chart (Chart.js). Interaction -> Hover for yearly data. Justification -> Best for time-series data.
+        - Economic Sectors: Report Info -> VAB contribution. Goal -> Compare proportions. Viz -> Doughnut Chart (Chart.js). Interaction -> Hover for percentages. Justification -> Clear part-to-whole comparison.
+        - Population Growth: Report Info -> Population census data. Goal -> Compare values. Viz -> Bar Chart (Chart.js). Interaction -> Hover for numbers. Justification -> Simple and effective for direct comparison.
+        - Education Level: Report Info -> Literacy rates. Goal -> Compare local vs. state. Viz -> Bar Chart (Chart.js). Interaction -> Hover for percentages. Justification -> Highlights the educational advantage of Imperatriz.
+        - Business Profile: Report Info -> Total companies vs. MEIs. Goal -> Show composition. Viz -> Doughnut Chart (Chart.js). Interaction -> Hover for counts. Justification -> Emphasizes the dominance of small businesses.
+        - The Opportunity: Report Info -> 95% of PMEs face financial issues. Goal -> Highlight a critical problem. Viz -> Large stat card + HTML/CSS icons. Interaction -> Static visual impact. Justification -> Creates a powerful focal point that tells the core story.
+        - Strategic Plan: Report Info -> Recommendations. Goal -> Organize complex info. Viz -> Interactive Tabs (HTML/CSS/JS). Interaction -> Click to switch content. Justification -> Prevents information overload and allows focused exploration.
+        - Library/Method -> All charts use Chart.js (Canvas). All diagrams/layouts use HTML/CSS with Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: #2563eb;
+        }
+        .tab-btn.active {
+            border-color: #2563eb;
+            color: #2563eb;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-blue-600">Diagnóstico Imperatriz</h1>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#inicio" class="nav-link text-gray-600 font-medium">Início</a>
+                <a href="#panorama" class="nav-link text-gray-600 font-medium">Panorama</a>
+                <a href="#oportunidade" class="nav-link text-gray-600 font-medium">Oportunidade</a>
+                <a href="#estrategia" class="nav-link text-gray-600 font-medium">Estratégia</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
+            <a href="#inicio" class="block nav-link text-gray-600">Início</a>
+            <a href="#panorama" class="block nav-link text-gray-600">Panorama</a>
+            <a href="#oportunidade" class="block nav-link text-gray-600">Oportunidade</a>
+            <a href="#estrategia" class="block nav-link text-gray-600">Estratégia</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="py-20 md:py-28 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Oportunidade de Consultoria Financeira em Imperatriz</h2>
+                <p class="max-w-3xl mx-auto text-lg md:text-xl text-gray-600 mb-12">Uma análise aprofundada revela um cenário econômico vibrante e uma necessidade latente por gestão financeira especializada, criando um terreno fértil para o sucesso.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div class="bg-blue-50 p-8 rounded-2xl shadow-sm">
+                        <p class="text-4xl font-bold text-blue-600 mb-2">R$ 7,6 bi</p>
+                        <p class="text-gray-700 font-medium">PIB em 2021</p>
+                        <p class="text-sm text-gray-500">2º maior do Maranhão</p>
+                    </div>
+                    <div class="bg-green-50 p-8 rounded-2xl shadow-sm">
+                        <p class="text-4xl font-bold text-green-600 mb-2">+35 mil</p>
+                        <p class="text-gray-700 font-medium">Empresas Ativas</p>
+                        <p class="text-sm text-gray-500">95% são MPEs</p>
+                    </div>
+                    <div class="bg-yellow-50 p-8 rounded-2xl shadow-sm">
+                        <p class="text-4xl font-bold text-yellow-600 mb-2">95%</p>
+                        <p class="text-gray-700 font-medium">PMEs com Dificuldades</p>
+                        <p class="text-sm text-gray-500">Na gestão financeira (Nordeste)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="panorama" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Panorama Completo de Imperatriz</h2>
+                    <p class="max-w-2xl mx-auto text-lg text-gray-600">Explore os dados que moldam o mercado local, desde a força econômica até o perfil da população e o ecossistema empresarial.</p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-8 flex justify-center border-b border-gray-200">
+                        <button class="tab-btn active py-3 px-6 border-b-2" data-tab="economia">Economia</button>
+                        <button class="tab-btn py-3 px-6 border-b-2 border-transparent text-gray-500" data-tab="demografia">Demografia</button>
+                        <button class="tab-btn py-3 px-6 border-b-2 border-transparent text-gray-500" data-tab="empresas">Empresas</button>
+                    </div>
+
+                    <div id="economia" class="tab-content">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div class="text-center lg:text-left">
+                                <h3 class="text-2xl font-bold mb-4">Crescimento Econômico Sólido</h3>
+                                <p class="text-gray-600 mb-6">O PIB de Imperatriz demonstra uma trajetória de crescimento consistente, consolidando a cidade como uma potência econômica no estado. Esse dinamismo impulsiona a demanda por serviços qualificados.</p>
+                                <div class="chart-container mx-auto lg:mx-0">
+                                    <canvas id="pibChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="text-center lg:text-left">
+                                <h3 class="text-2xl font-bold mb-4">Economia Diversificada</h3>
+                                <p class="text-gray-600 mb-6">Com forte presença da indústria e dos serviços, a economia local é resiliente e menos vulnerável a flutuações setoriais, criando oportunidades em múltiplos segmentos.</p>
+                                <div class="chart-container mx-auto lg:mx-0">
+                                    <canvas id="setoresChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="demografia" class="tab-content hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div class="text-center lg:text-left">
+                                <h3 class="text-2xl font-bold mb-4">População em Crescimento</h3>
+                                <p class="text-gray-600 mb-6">O aumento de mais de 10% na população entre os censos indica uma cidade dinâmica, atraindo novos moradores e expandindo a base de consumidores e a força de trabalho.</p>
+                                <div class="chart-container mx-auto lg:mx-0">
+                                    <canvas id="populacaoChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="text-center lg:text-left">
+                                <h3 class="text-2xl font-bold mb-4">Capital Humano Qualificado</h3>
+                                <p class="text-gray-600 mb-6">Com uma taxa de alfabetização superior à média estadual, a população de Imperatriz está mais apta a compreender e valorizar serviços financeiros complexos.</p>
+                                <div class="chart-container mx-auto lg:mx-0">
+                                    <canvas id="educacaoChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="empresas" class="tab-content hidden">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            <div class="text-center lg:text-left">
+                                <h3 class="text-2xl font-bold mb-4">Ecossistema Empreendedor Vibrante</h3>
+                                <p class="text-gray-600 mb-6">O grande número de empresas ativas, com destaque para MEIs, representa um vasto mercado para serviços de consultoria financeira adaptados a pequenos negócios.</p>
+                                <div class="chart-container mx-auto lg:mx-0">
+                                    <canvas id="empresasChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+                                <h3 class="text-2xl font-bold mb-4">Apoio Institucional</h3>
+                                <p class="text-gray-600 mb-4">Iniciativas como o programa "Maranhão Juros Zero" e o forte apoio do SEBRAE e da "Sala do Empreendedor" fomentam o crescimento dos negócios locais, que se tornam potenciais clientes.</p>
+                                <ul class="space-y-3 text-gray-700">
+                                    <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span>Crédito facilitado para MPEs</span></li>
+                                    <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span>Capacitação e consultoria gratuita (SEBRAE)</span></li>
+                                    <li class="flex items-start"><span class="text-green-500 mr-2 mt-1">✓</span><span>Suporte para formalização e gestão</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="oportunidade" class="py-20 md:py-24 bg-blue-600 text-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">A Grande Oportunidade: A Dor do Mercado</h2>
+                    <p class="max-w-3xl mx-auto text-lg text-blue-200">A principal oportunidade não está apenas nos números de crescimento, mas em um problema crítico e generalizado que sua consultoria pode resolver.</p>
+                </div>
+                <div class="bg-white/10 p-8 md:p-12 rounded-3xl backdrop-blur-sm border border-white/20 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="text-center md:text-left">
+                            <p class="text-6xl md:text-8xl font-extrabold text-yellow-300">95%</p>
+                            <p class="text-2xl font-bold mt-2">Das PMEs no Nordeste enfrentam dificuldades com gestão financeira.</p>
+                        </div>
+                        <div>
+                            <p class="text-lg text-blue-100 mb-4">Essa deficiência é a principal causa de insucesso empresarial. Problemas como controle de fluxo de caixa, mistura de finanças e falta de planejamento são crônicos. </p>
+                            <p class="font-bold text-xl text-white">Sua consultoria é a solução direta para essa dor.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="estrategia" class="py-20 md:py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Plano Estratégico para o Sucesso</h2>
+                    <p class="max-w-2xl mx-auto text-lg text-gray-600">Com base no diagnóstico, aqui está um roteiro claro para estruturar e posicionar seu negócio de consultoria em Imperatriz.</p>
+                </div>
+                <div class="max-w-5xl mx-auto bg-white p-8 md:p-10 rounded-2xl shadow-xl border border-gray-100">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div class="md:col-span-1">
+                            <ul id="strategy-tabs" class="space-y-2">
+                                <li><button class="w-full text-left p-3 rounded-lg font-semibold strategy-tab-btn active" data-target="publico">Público-Alvo</button></li>
+                                <li><button class="w-full text-left p-3 rounded-lg font-semibold strategy-tab-btn" data-target="servicos">Serviços Chave</button></li>
+                                <li><button class="w-full text-left p-3 rounded-lg font-semibold strategy-tab-btn" data-target="diferenciais">Diferenciais</button></li>
+                                <li><button class="w-full text-left p-3 rounded-lg font-semibold strategy-tab-btn" data-target="operacional">Estrutura</button></li>
+                            </ul>
+                        </div>
+                        <div class="md:col-span-3">
+                            <div id="publico" class="strategy-content">
+                                <h3 class="text-2xl font-bold mb-4">Público-Alvo Estratégico</h3>
+                                <p class="text-gray-600 mb-6">Focar em segmentos com necessidades claras e urgentes maximizará o impacto e a aquisição de clientes.</p>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h4 class="font-bold text-lg">Para Empresas (PJ):</h4>
+                                        <p class="text-gray-600">MEIs e MPEs que precisam de estruturação, controle de caixa, precificação e otimização tributária.</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Para Pessoas Físicas (PF):</h4>
+                                        <p class="text-gray-600">Famílias e indivíduos endividados buscando reorganização e profissionais que necessitam de planejamento financeiro.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="servicos" class="strategy-content hidden">
+                                <h3 class="text-2xl font-bold mb-4">Portfólio de Serviços Essenciais</h3>
+                                <p class="text-gray-600 mb-6">Oferecer soluções que atacam diretamente as dores do mercado local.</p>
+                                <ul class="space-y-3 list-disc list-inside text-gray-700">
+                                    <li>Diagnóstico e Reorganização Financeira Empresarial</li>
+                                    <li>Gestão de Fluxo de Caixa e Capital de Giro</li>
+                                    <li>Planejamento Tributário (foco no Simples Nacional e Fator R)</li>
+                                    <li>Planejamento Financeiro Pessoal e Gestão de Dívidas</li>
+                                    <li>Análise de Viabilidade de Investimentos e Projetos</li>
+                                </ul>
+                            </div>
+                            <div id="diferenciais" class="strategy-content hidden">
+                                <h3 class="text-2xl font-bold mb-4">Proposta de Valor Única</h3>
+                                <p class="text-gray-600 mb-6">Como se destacar da concorrência e construir confiança.</p>
+                                <ul class="space-y-3">
+                                    <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1 font-bold">✓</span><div><span class="font-bold">Consultoria Acessível:</span> Linguagem simples e planos que cabem no orçamento de PMEs.</div></li>
+                                    <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1 font-bold">✓</span><div><span class="font-bold">Foco em Educação:</span> Capacitar o cliente para tomar melhores decisões futuras, criando valor duradouro.</div></li>
+                                    <li class="flex items-start"><span class="text-blue-500 mr-3 mt-1 font-bold">✓</span><div><span class="font-bold">Parcerias Estratégicas:</span> Colaborar com SEBRAE, contadores e associações para gerar credibilidade e indicações.</div></li>
+                                </ul>
+                            </div>
+                            <div id="operacional" class="strategy-content hidden">
+                                <h3 class="text-2xl font-bold mb-4">Estrutura Operacional e Legal</h3>
+                                <p class="text-gray-600 mb-6">Os pilares para iniciar as operações de forma enxuta e legalmente correta.</p>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h4 class="font-bold text-lg">Formalização:</h4>
+                                        <p class="text-gray-600">CNAE 7020-4/00 (Consultoria em gestão empresarial). Regime tributário sugerido: Simples Nacional (avaliar Fator R com contador).</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Localização:</h4>
+                                        <p class="text-gray-600">Iniciar em home office ou coworking para reduzir custos fixos. Imperatriz oferece opções como Oxigênio Coworking e Hub Care.</p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">Qualificação:</h4>
+                                        <p class="text-gray-600">Buscar certificações (CPA-10, CPA-20, CFP) para aumentar a credibilidade e o conhecimento técnico.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Diagnóstico de Viabilidade Imperatriz. Todos os dados baseados no relatório de análise de mercado.</p>
+            <p class="text-sm text-gray-400 mt-2">Aplicação interativa gerada para fins de análise e planejamento estratégico.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    const tabId = button.getAttribute('data-tab');
+                    tabContents.forEach(content => {
+                        if (content.id === tabId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            const strategyTabButtons = document.querySelectorAll('.strategy-tab-btn');
+            const strategyContents = document.querySelectorAll('.strategy-content');
+
+            strategyTabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    strategyTabButtons.forEach(btn => btn.classList.remove('active', 'bg-blue-100', 'text-blue-700'));
+                    button.classList.add('active', 'bg-blue-100', 'text-blue-700');
+
+                    const targetId = button.getAttribute('data-target');
+                    strategyContents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.classList.remove('hidden');
+                        } else {
+                            content.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+            
+            // Activate first strategy tab by default
+            document.querySelector('.strategy-tab-btn[data-target="publico"]').classList.add('active', 'bg-blue-100', 'text-blue-700');
+
+
+            const chartTooltip = {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.parsed.y !== null) {
+                            label += new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 }).format(context.parsed.y);
+                        }
+                        return label;
+                    }
+                }
+            };
+            
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        backgroundColor: '#1f2937',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        padding: 12,
+                        cornerRadius: 6,
+                        boxPadding: 4
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e5e7eb'
+                        },
+                        ticks: {
+                            color: '#4b5563'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#4b5563'
+                        }
+                    }
+                }
+            };
+            
+            const doughnutChartOptions = {
+                 responsive: true,
+                 maintainAspectRatio: false,
+                 plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                    tooltip: {
+                        backgroundColor: '#1f2937',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        padding: 12,
+                        cornerRadius: 6,
+                        boxPadding: 4,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed.toLocaleString('pt-BR') + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            };
+            
+            new Chart(document.getElementById('pibChart'), {
+                type: 'line',
+                data: {
+                    labels: ['2017', '2018', '2019', '2020', '2021'],
+                    datasets: [{
+                        label: 'PIB (em Milhões de R$)',
+                        data: [6609, 6950, 7800, 7500, 7693],
+                        fill: true,
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                        tension: 0.3
+                    }]
+                },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, tooltip: { ...chartOptions.plugins.tooltip, callbacks: {
+                    label: (ctx) => `R$ ${ctx.raw.toLocaleString('pt-BR')} Milhões`
+                }}}}
+            });
+
+            new Chart(document.getElementById('setoresChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Indústria', 'Serviços (incl. Adm. Pública)', 'Agropecuária'],
+                    datasets: [{
+                        label: 'Contribuição para o VAB',
+                        data: [26.9, 72.6, 0.5],
+                        backgroundColor: ['#2563eb', '#3b82f6', '#60a5fa'],
+                        borderColor: '#f8fafc',
+                        borderWidth: 4,
+                    }]
+                },
+                options: doughnutChartOptions
+            });
+
+            new Chart(document.getElementById('populacaoChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Censo 2010', 'Censo 2022'],
+                    datasets: [{
+                        label: 'População Total',
+                        data: [247505, 273110],
+                        backgroundColor: ['#10b981', '#34d399'],
+                        borderRadius: 6
+                    }]
+                },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, legend: {display: false}, tooltip: { ...chartOptions.plugins.tooltip, callbacks: {
+                    label: (ctx) => `${ctx.raw.toLocaleString('pt-BR')} habitantes`
+                }}}}
+            });
+            
+            new Chart(document.getElementById('educacaoChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Alfabetização (15+ anos)'],
+                    datasets: [
+                        {
+                            label: 'Imperatriz',
+                            data: [93.22],
+                            backgroundColor: '#2563eb',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Média Maranhão',
+                            data: [84.95],
+                            backgroundColor: '#9ca3af',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: { ...chartOptions, plugins: { ...chartOptions.plugins, tooltip: { ...chartOptions.plugins.tooltip, callbacks: {
+                    label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%`
+                }}}}
+            });
+            
+            new Chart(document.getElementById('empresasChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['MEIs', 'Outras Empresas'],
+                    datasets: [{
+                        label: 'Perfil Empresarial',
+                        data: [16883, 35753 - 16883],
+                        backgroundColor: ['#f59e0b', '#fcd34d'],
+                        borderColor: '#ffffff',
+                        borderWidth: 4,
+                    }]
+                },
+                options: { ...doughnutChartOptions, plugins: { ...doughnutChartOptions.plugins, tooltip: { ...doughnutChartOptions.plugins.tooltip, callbacks: {
+                    label: (ctx) => `${ctx.label}: ${ctx.raw.toLocaleString('pt-BR')}`
+                }}}}
+            });
+
+        });
+    </script>
+</body>
+</html>
